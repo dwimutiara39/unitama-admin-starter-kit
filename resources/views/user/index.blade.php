@@ -29,14 +29,27 @@
                             <td class="text-start">{{ $user->email }}</td>
                             <td>{{ $user->role }}</td>
                             <td class="text-nowrap">
-                                <a class="btn btn-warning btn-sm" href="{{ route('user.edit', $user) }}"
-                                    role="button"><i class='bx bx-edit-alt'></i></a>
-                                <form action="{{ route('user.destroy', $user) }}" method="POST" class="d-inline">
-                                    @method('DELETE')
-                                    @csrf
 
-                                    <button type="submit" class="btn btn-danger btn-sm"
-                                        onclick="return confirm('Anda Yakin?')"><i class='bx bx-trash'></i></button>
+                                <a href="{{ route('user.show', $user) }}" class="btn btn-info btn-sm">
+                                    <i class='bx bx-show'></i>
+                                </a>
+
+                                <a href="{{ route('user.edit', $user) }}" class="btn btn-warning btn-sm">
+                                    <i class='bx bx-edit'></i>
+                                </a>
+
+                                <form action="{{ route('user.destroy', $user) }}" method="POST" class="d-inline">
+
+                                    @csrf
+                                    @method('DELETE')
+
+                                    <button onclick="return confirm('Yakin ingin menghapus data?')"
+                                        class="btn btn-danger btn-sm">
+
+                                        <i class='bx bx-trash'></i>
+
+                                    </button>
+
                                 </form>
 
                             </td>
