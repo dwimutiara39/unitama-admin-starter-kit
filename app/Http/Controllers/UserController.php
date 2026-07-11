@@ -147,10 +147,6 @@ DB::beginTransaction();
                 Storage::disk('public')->delete($user->avatar);
             }
         }
-
-
-
-
         if($request->password){
             $validated['password']=bcrypt($request->password);
             
