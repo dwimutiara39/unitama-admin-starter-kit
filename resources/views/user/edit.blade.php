@@ -1,78 +1,94 @@
 <x-app>
 
     <x-slot:title>{{ $title }}</x-slot:title>
-
-    <div class="card shadow p-4">
-
-        <form action="{{ route('user.update', $user) }}" method="POST" enctype="multipart/form-data">
-
-            @csrf
-            @method('PUT')
-
-            <div class="mb-3">
-
-                <label>Nama</label>
-
-                <input type="text" name="name" class="form-control" value="{{ old('name', $user->name) }}">
-
-            </div>
-
-            <div class="mb-3">
-
-                <label>Email</label>
-
-                <input type="email" name="email" class="form-control" value="{{ old('email', $user->email) }}">
-
-            </div>
-
-            <div class="mb-3">
-
-                <label>Role</label>
-
-                <select name="role" class="form-select">
-
-                    <option value="Superadmin" @selected(old('role', $user->role) == 'Superadmin')>
-
-                        Superadmin
-
-                    </option>
-
-                    <option value="Admin" @selected(old('role', $user->role) == 'Admin')>
-
-                        Admin
-
-                    </option>
-
-                </select>
-
-            </div>
-
-            <div class="mb-3">
-
-                <label>Avatar</label>
-
-                <input type="file" name="avatar" class="form-control">
-
-            </div>
-
-            <div class="text-end">
-
-                <a href="{{ route('user.index') }}" class="btn btn-warning">
-
-                    Cancel
-
-                </a>
-
-                <button class="btn btn-primary">
-
-                    Update
-
-                </button>
-
-            </div>
-
-        </form>
-
+    <div class="card shadow p-3">
+        <h5 class="fw-bold mb-0">{{ $title }}</h5>
     </div>
+
+    <div class="card shadow p-3">
+        <form method="POST" action="{{ route('user.update', $user) }}" class="form" enctype="multipart/form-data">
+            @csrf
+            @method('put')
+            <div class="row g-3 mb-3">
+
+                <div class="col-md-6">
+                    <label for="name" class="form-label required">Nama</label>
+                    <input type="teks" class="form-control @error('name') is-invalid @enderror" id="name"
+                        name="name" value="{{ old('name', $user->name) }}" required>
+                    @error('name')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
+                </div>
+
+                <div class="col-md-6">
+                    <label for="email" class="form-label required">Email</label>
+                    <input type="email" class="form-control @error('email') is-invalid @enderror" id="email"
+                        name="email" value="{{ old('email', $user->email) }}" required>
+                    @error('email')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
+                </div>
+
+                <div class="col-md-6">
+                    <label for="password" class="form-label">password</label>
+                    <input type="password" class="form-control @error('password') is-invalid @enderror" id="password"
+                        name="password" minlength="8">
+                    @error('password')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
+                </div>
+
+                <div class="col-md-6">
+                    <label for="password" class="form-label">Konfirmasi Password</label>
+                    <input type="password" class="form-control @error('password') is-invalid @enderror"
+                        id="passwordconfirm" name="passwordconfirm"minlength="8" data-parsley-equalto=#password>
+                    @error('passwordconfirm')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
+                </div>
+
+                <div class="col-md-6">
+                    <label for="role" class="form-label required">Role</label>
+                    <select class="form-select select2-default" name="role"required>
+                        <option value="">Pilih Role</option>
+                        <option value="Superadmin"@selected(old('role', $user->role) == 'Superadmin')>
+                            Superadmin</option>
+                        <option value="Admin"@selected(old('role', $user->role) == 'Admin')>
+                            Admin
+                        </option>
+                    </select>
+                    @error('role')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
+                </div>
+
+                <div class="col-md-6">
+                    <label for="avatar" class="form-label">Avatar (MaxSize 1Mb)</label>
+                    <input type="file" class="form-control @error('avatar') is-invalid @enderror" id="upload"
+                        name="avatar">
+                    @error('avatar')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
+                    <img src="{{ $user->avatar ? asset('storage/' . $user->avatar) : asset('niceadmin/img/noprofil.png') }}"
+                        alt="Avatar" class="w-50 rounded mt-2" id="preview">
+                </div>
+            </div>
+            <div class="text-end">
+                <a class="btn btn-warning" href="{{ route('user.index') }}" role="button">Cancel</a>
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </div>
+        </form>
+    </div>
+
+
+    @push('modals')
+    @endpush
+
+    @push('scripts')
+    @endpush
+
+
+
+
 
 </x-app>

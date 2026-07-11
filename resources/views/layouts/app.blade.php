@@ -217,8 +217,28 @@
     </footer>
     <!-- End Footer -->
 
+
     <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i
             class="bi bi-arrow-up-short"></i></a>
+
+    {{-- modal delete --}}
+    <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form action=""method="POST" id="form-delete">
+                    @csrf
+                    @method('DELETE')
+                    <div class="modal-body">
+                        <p>Anda Yakin Ingin Mengahpus Data?</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                        <button type="submit" class="btn btn-danger">Ya, hapus data</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 
     @stack('modals')
 
@@ -261,7 +281,30 @@
             theme: 'bootstrap-5',
             width: "100%",
         })
+
+
+
+        let flashsuccess = "{{ session('success') ?? '' }}";
+        if (flashsuccess) {
+            Swal.fire({
+                title: "Mantap!",
+                text: flashsuccess,
+                icon: "success",
+                timer: 1500,
+                showConfirmButton: false,
+            });
+        }
+        let flashError = "{{ session('error') ?? '' }}";
+        if (flashError) {
+            Swal.fire({
+                icon: "error",
+                title: "wadduh...",
+                text: flashError,
+            });
+        });
+        }
     </script>
+
 
     @stack('scripts')
 

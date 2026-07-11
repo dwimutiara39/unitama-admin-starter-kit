@@ -1,57 +1,38 @@
-<x-app>
+<div class="row g-3">
 
-    <x-slot:title>{{ $title }}</x-slot:title>
-
-    <div class="card shadow p-4">
-
-        <table class="table">
-
-            <tr>
-
-                <th width="200">Nama</th>
-
-                <td>{{ $user->name }}</td>
-
-            </tr>
-
-            <tr>
-
-                <th>Email</th>
-
-                <td>{{ $user->email }}</td>
-
-            </tr>
-
-            <tr>
-
-                <th>Role</th>
-
-                <td>{{ $user->role }}</td>
-
-            </tr>
-
-            <tr>
-
-                <th>Avatar</th>
-
-                <td>
-
-                    @if ($user->avatar)
-                        <img src="{{ asset('storage/' . $user->avatar) }}" width="120">
-                    @endif
-
-                </td>
-
-            </tr>
-
-        </table>
-
-        <a href="{{ route('user.index') }}" class="btn btn-secondary">
-
-            Back
-
-        </a>
-
+    <div class="col-md-3">
+        <img src="{{ $user->avatar ? asset('storage/' . $user->avatar) : asset('niceadmin/img/noprofil.png') }}"
+            alt="Avatar" class="w-100 rounded">
     </div>
 
-</x-app>
+    <div class="col-md-9">
+        <table class="table">
+            <tr>
+                <td width="10">Email</td>
+                <td width="3">:</td>
+                <td>{{ $user->email }}</td>
+            </tr>
+            <tr>
+                <td>Name</td>
+                <td>:</td>
+                <td>{{ $user->name }}</td>
+            </tr>
+            <tr>
+                <td>Role</td>
+                <td>:</td>
+                <td>{{ $user->role }}</td>
+            </tr>
+            <tr>
+                <td>Dibuat</td>
+                <td>:</td>
+                <td>{{ $user->created_at->diffForHumans() }}</td>
+            </tr>
+            <tr>
+                <td>Diubah</td>
+                <td>:</td>
+                <td>{{ $user->updated_at->diffForHumans() }}</td>
+            </tr>
+        </table>
+    </div>
+
+</div>
